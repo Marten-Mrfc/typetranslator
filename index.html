@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentence Saver</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- AOS CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      margin-top: 50px;
+    }
+
+    .typing-card {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+
+    .modal-content {
+      border-radius: 10px;
+    }
+
+    .modal-header {
+      border-bottom: none;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-footer {
+      border-top: none;
+    }
+
+    #sentencesList {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #sentencesList li {
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+    }
+
+    #sentencesList li:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Button to trigger modal (hidden) -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sentenceModal" id="modalButton">
+    Display Sentences
+  </button>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="typing-card">
+          <h4>Dutch Sentence</h4>
+          <p id="untranslated"></p>
+          <div class="form-group">
+            <label for="germanInput">Type German Translation:</label>
+            <input type="text" class="form-control" id="germanInput" placeholder="Enter German translation">
+          </div>
+          <button type="button" class="btn btn-primary" id="checkTranslation">Check Translation</button>
+          <p id="translationFeedback"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="sentenceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Your Saved Sentences</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul id="sentencesList"></ul>
+          <!-- Form for entering and submitting sentences -->
+          <form id="sentenceForm">
+            <div class="form-group">
+              <label for="untranslated">Dutch Sentence:</label>
+              <input type="text" class="form-control" id="untranslated" placeholder="Enter Dutch sentence">
+            </div>
+            <div class="form-group">
+              <label for="translated">German Sentence:</label>
+              <input type="text" class="form-control" id="translated" placeholder="Enter German translation">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    var untranslateds = [];
+    var germanTranslations = [];
+    var currentSentenceIndex = 0;
+
+    // Function to display Dutch sentence
+    function displayuntranslated() {
+      document.getElementById("untranslated").textContent = untranslateds[currentSentenceIndex];
+    }
+
+    // Function to check German translation
+    function checkTranslation() {
+      var germanInput = document.getElementById("germanInput").value;
+      var correctTranslation = germanTranslations[currentSentenceIndex];
+
+      if (germanInput.trim().toLowerCase() === correctTranslation.trim().toLowerCase()) {
+        document.getElementById("translationFeedback").textContent = "Correct!";
+      } else {
+        document.getElementById("translationFeedback").textContent = "Incorrect. The correct translation is: " + correctTranslation;
+      }
+
+      // Move to the next sentence
+      currentSentenceIndex++;
+      if (currentSentenceIndex < untranslateds.length) {
+        displayuntranslated();
+        document.getElementById("germanInput").value = "";
+      } else {
+        document.getElementById("germanInput").setAttribute("disabled", "disabled");
+        document.getElementById("checkTranslation").setAttribute("disabled", "disabled");
+        document.getElementById("translationFeedback").textContent = "You've completed all sentences!";
+      }
+    }
+
+    // Load saved sentences on page load
+    document.addEventListener("DOMContentLoaded", function() {
+      var untranslated = getCookie("untranslated");
+      var translated = getCookie("translated");
+
+      if (untranslated && translated) {
+        untranslateds = untranslated.split("-");
+        germanTranslations = translated.split("-");
+
+        displayuntranslated();
+      }
+    });
+
+    // Add event listener to the check translation button
+    document.getElementById("checkTranslation").addEventListener("click", function() {
+      checkTranslation();
+    });
+
+    // Function to get cookie by name
+    function saveSentences() {
+      // Get input values
+      var untranslated = document.getElementById('untranslated').value;
+      var translated = document.getElementById('translated').value;
+
+      // Retrieve existing sentences from cookies
+      var existinguntranslated = getCookie("untranslated");
+      var existingtranslated = getCookie("translated");
+
+      // Concatenate new sentences with existing ones
+      if (existinguntranslated && existingtranslated) {
+        untranslated = existinguntranslated + "-" + untranslated;
+        translated = existingtranslated + "-" + translated;
+      }
+
+      // Save concatenated sentences in cookies
+      document.cookie = "untranslated=" + encodeURIComponent(untranslated) + "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+      document.cookie = "translated=" + encodeURIComponent(translated) + "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+
+      // Clear form fields
+      document.getElementById('untranslated').value = "";
+      document.getElementById('translated').value = "";
+    }
+
+    // Function to display saved sentences in modal
+    function displaySentences() {
+      // Retrieve sentences from cookies
+      var untranslated = getCookie("untranslated");
+      var translated = getCookie("translated");
+
+      // Display sentences in modal body
+      var sentencesList = document.getElementById("sentencesList");
+      sentencesList.innerHTML = ""; // Clear previous list content
+
+      if (untranslated && translated) {
+        var untranslateds = untranslated.split("-");
+        var translateds = translated.split("-");
+
+        // Find the minimum length of the two arrays
+        var minLength = Math.min(untranslateds.length, translateds.length);
+
+        // Display each pair of sentences
+        for (var i = 0; i < minLength; i++) {
+          var listItem = document.createElement("li");
+          listItem.textContent = decodeURIComponent(untranslateds[i]) + " - " + decodeURIComponent(translateds[i]);
+          sentencesList.appendChild(listItem);
+        }
+      }
+    }
+
+    // Function to get cookie by name
+    function getCookie(name) {
+      var value = "; " + document.cookie;
+      var parts = value.split("; " + name + "=");
+      if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+
+    // Add event listener to the form for submission
+    document.getElementById("sentenceForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form submission
+      saveSentences(); // Save sentences
+      displaySentences(); // Display saved sentences
+      $('#sentenceModal').modal('hide'); // Hide modal
+    });
+
+    // Load saved sentences on page load
+    document.addEventListener("DOMContentLoaded", function() {
+      displaySentences();
+    });
+  </script>
+</body>
+
+</html>
