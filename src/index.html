@@ -7,10 +7,10 @@
   <title>Sentence Saver</title>
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="./css/style.css" rel="stylesheet">
   <!-- AOS CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-  <!-- Custom CSS -->
-  <style href="./css/style.css"></style>
 </head>
 
 <body>
@@ -18,18 +18,17 @@
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sentenceModal" id="modalButton">
     Display Sentences
   </button>
+
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="typing-card">
           <h4>Dutch Sentence</h4>
           <p id="untranslated"></p>
-          <div class="form-group">
-            <label for="germanInput">Type German Translation:</label>
-            <input type="text" class="form-control" id="germanInput" placeholder="Enter German translation">
+          <div id="germanDisplay"></div>
+          <div class="progress mt-2">
+            <div class="progress-bar bg-success" role="progressbar" id="progressBar"></div>
           </div>
-          <button type="button" class="btn btn-primary" id="checkTranslation">Check Translation</button>
-          <p id="translationFeedback"></p>
         </div>
       </div>
     </div>
@@ -46,6 +45,7 @@
           </button>
         </div>
         <div class="modal-body">
+          <!-- List where all the sentences are loaded and displayed-->
           <ul id="sentencesList"></ul>
           <!-- Form for entering and submitting sentences -->
           <form id="sentenceForm">
@@ -57,7 +57,7 @@
               <label for="translated">German Sentence:</label>
               <input type="text" class="form-control" id="translated" placeholder="Enter German translation">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Add sentence</button>
           </form>
         </div>
         <div class="modal-footer">
@@ -72,7 +72,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="./js/script.js"></script>
+  <script src="./js/modal.js"></script>
+  <script src="./js/typing.js"></script>
 </body>
 
 </html>
