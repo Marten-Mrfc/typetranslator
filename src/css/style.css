@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+  }
+
+  .container {
+    margin-top: 50px;
+  }
+
+  .typing-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+
+  .modal-content {
+    border-radius: 10px;
+  }
+
+  .modal-header {
+    border-bottom: none;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-footer {
+    border-top: none;
+  }
+
+  #sentencesList {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  #sentencesList li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+
+  #sentencesList li:hover {
+    background-color: #f0f0f0;
+  }
