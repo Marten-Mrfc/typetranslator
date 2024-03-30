@@ -2,7 +2,27 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
 }
-
+.btn {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition-duration: 0.4s;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100%;
+}
 .container {
   margin-top: 50px;
 }
@@ -11,8 +31,9 @@ body {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: center;
+  padding: 20px; /* Add padding to the card */
+  position: relative; /* Set position to relative for absolute positioning of the progress bar */
+  font-size: 40px;
 }
 
 .typing-card h4 {
@@ -31,7 +52,7 @@ body {
   padding: 10px;
 }
 
-#germanDisplay {
+#Translated {
   margin-bottom: 20px;
 }
 
@@ -126,13 +147,28 @@ body {
   color: rgb(255, 0, 0);
 }
 /* Progress bar */
+/* Progress bar */
+/* Progress bar container */
+/* Progress bar container */
+/* Progress bar container */
 .progress {
   height: 20px;
-  width: auto;
-  margin-left: -100px;
-  margin-right: 100px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center; /* Center vertically */
+  width: calc(100% - 40px); /* Subtract padding from the width */
+  position: absolute; /* Set position to absolute */
+  bottom: 10px;
+  left: 20px; /* Position from the left */
 }
 
+/* Progress bar */
 .progress-bar {
+  height: 100%;
+  background-color: #007bff;
+  width: 0;
   transition: width 0.3s ease-in-out;
+  max-width: 100%; /* Set maximum width to container width */
 }

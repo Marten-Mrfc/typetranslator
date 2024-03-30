@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+  var mainDisplay = document.getElementById("Translated");
+  var targetDisplay = document.getElementById("Untranslated");
   // Function to load data from cookies
   function loadFromCookie() {
     var cookies = document.cookie.split("; ");
@@ -13,11 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to display the next sentence
   function displayNextSentence(sentences, currentIndex) {
-    var untranslatedElement = document.getElementById("untranslated");
-    var germanDisplay = document.getElementById("germanDisplay");
     var progressBar = document.getElementById("progressBar");
     if (sentences && currentIndex < sentences.length) {
-      untranslatedElement.textContent = sentences[currentIndex].untranslated;
+      targetDisplay.textContent = sentences[currentIndex].untranslated;
       var germanWords = sentences[currentIndex].translated.split(" ");
       var html = "";
       germanWords.forEach((word) => {
@@ -27,10 +27,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         html += "</span> ";
       });
-      germanDisplay.innerHTML = html;
+      mainDisplay.innerHTML = html;
+      progressBar.style.width = "0%";
     } else {
-      untranslatedElement.textContent = "No more sentences available.";
-      germanDisplay.innerHTML = "";
+      targetDisplay.textContent = "No more sentences available.";
+      mainDisplay.innerHTML = "";
       progressBar.style.width = "100%";
     }
   }
@@ -43,17 +44,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   var isChecking = false; // Flag to indicate if typing is being checked
   var currentLetterIndex = 0; // Index of the current letter being checked
+
   function checkTyping(sentences, currentIndex, typedText) {
-    var correctTranslation = sentences[currentIndex].translated;
-    var typedWords = typedText.trim().split(" ");
-    var correctWords = correctTranslation.trim().split(" ");
-    if (typedWords.length === correctWords.length) {
-      for (var i = 0; i < typedWords.length; i++) {
-        if (typedWords[i] !== correctWords[i]) {
-          return false;
+    if (sentences.length > currentIndex && currentIndex >= 0) {
+      var correctTranslation = sentences[currentIndex].translated;
+      var typedWords = typedText.trim().split(" ");
+      var correctWords = correctTranslation.trim().split(" ");
+      if (typedWords.length === correctWords.length) {
+        for (var i = 0; i < typedWords.length; i++) {
+          if (
+            typedWords[i] !== correctWords[i] ||
+            document.querySelector(".wrong")
+          ) {
+            return false;
+          }
         }
+        return true;
       }
-      return true;
     }
     return false;
   }
@@ -61,24 +68,22 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to update the progress bar
   function updateProgressBar(currentIndex, totalSentences) {
     var progressBar = document.getElementById("progressBar");
-    var germanDisplay = document.getElementById("germanDisplay");
-    var typedLetters = germanDisplay.querySelectorAll(".letter.typed");
+    var typedLetters = mainDisplay.querySelectorAll(".letter.typed");
     progressBar.style.width =
-      (typedLetters.length / germanDisplay.textContent.length) * 130 + "%";
+      (typedLetters.length / mainDisplay.textContent.length) * 130 + "%";
   }
 
   // Event listener for key press
   document.addEventListener("keydown", function (event) {
+    console.groupCollapsed("Keydown: "+ event.key);
     if (!isChecking && event.key !== "Shift" && event.key !== "Alt") {
       isChecking = true; // Set flag to indicate that typing is being checked
-
-      var germanDisplay = document.getElementById("germanDisplay");
       var typedLetter = event.key;
-      var letterSpans = germanDisplay.querySelectorAll(".letter");
+      var letterSpans = mainDisplay.querySelectorAll(".letter");
       console.log("unchecked: " + typedLetter); // Log the pressed key
       if (event.key === "Backspace") {
         event.preventDefault(); // Prevent the default behavior of the backspace key
-
+        console.log("pressed: " + typedLetter); // Log the pressed key
         if (currentLetterIndex > 0) {
           currentLetterIndex--; // Go one letter back
           letterSpans[currentLetterIndex].classList.remove("typed", "wrong");
@@ -86,7 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       // Check if the pressed key is a letter (excluding Shift)
       else if (/[a-zA-ZäÄ]/.test(typedLetter)) {
-        updateProgressBar(currentIndex, sentences.length); // Update the progress bar
         if (currentLetterIndex < letterSpans.length) {
           if (letterSpans[currentLetterIndex].textContent === typedLetter) {
             letterSpans[currentLetterIndex].classList.add("typed");
@@ -99,18 +103,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (currentLetterIndex === letterSpans.length) {
-          if (checkTyping(sentences, currentIndex, germanDisplay.textContent)) {
+          if (checkTyping(sentences, currentIndex, mainDisplay.textContent)) {
             currentIndex++;
             currentLetterIndex = 0; // Reset the current letter index
             displayNextSentence(sentences, currentIndex);
-            updateProgressBar(currentIndex, sentences.length); // Update the progress bar
           }
         }
       }
 
       setTimeout(function () {
+        updateProgressBar(currentIndex, sentences.length); // Update the progress bar
         isChecking = false; // Reset flag to allow checking on next keydown event
       }, 10); // Wait for 1 second before allowing next check
     }
+    console.groupEnd("Keydown: "+ event.key);
   });
 });
