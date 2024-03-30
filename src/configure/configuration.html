@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeTranslator Configuration</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/basic.css">
+  <link rel="stylesheet" href="../css/configure.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="../index.html">TypeTranslator</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../index.html"><i class="bi bi-house"></i> Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../configure/configuration.html"><i class="bi bi-gear"></i> Configuration</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../learn/select.html"><i class="bi bi-book"></i> Learn</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../contact.html"><i class="bi bi-envelope"></i> Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="container">
+    <h1>TypeTranslator Configuration</h1>
+
+    <div class="row">
+      <div class="col-md-6" data-aos="fade-right" data-aos-delay="200">
+        <div class="form-group">
+          <label for="untranslatedText">Untranslated Text</label>
+          <input type="text" class="form-control" id="untranslatedText">
+        </div>
+      </div>
+      <div class="col-md-6" data-aos="fade-left" data-aos-delay="200">
+        <div class="form-group">
+          <label for="translatedText">Translated Text</label>
+          <input type="text" class="form-control" id="translatedText">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6" data-aos="fade-right" data-aos-delay="400">
+        <div class="form-group">
+          <label for="untranslatedLanguage">Untranslated Language</label>
+          <select class="form-control" id="untranslatedLanguage">
+            <option value="en">English</option>
+            <option value="nl">Dutch</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="es">Spanish</option>
+            <option value="it">Italian</option>
+            <option value="pt">Portuguese</option>
+            <option value="ja">Japanese</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6" data-aos="fade-left" data-aos-delay="400">
+        <div class="form-group">
+          <label for="translatedLanguage">Translated Language</label>
+          <select class="form-control" id="translatedLanguage">
+            <script>
+              const languages = document.getElementById('untranslatedLanguage').innerHTML;
+              document.getElementById('translatedLanguage').innerHTML = languages;
+            </script>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="addCardBtn" data-aos="zoom-in" data-aos-delay="600">Add Card</button>
+
+    <div id="cardList" class="mt-4" data-aos="fade-up" data-aos-delay="800">
+      <!-- Cards will be dynamically added here -->
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="../js/configure/cards.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+
+</html>

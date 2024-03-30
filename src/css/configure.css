@@ -1,0 +1,30 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+header {
+  padding-bottom: 20px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.hero {
+  padding: 50px 0;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 24px;
+  margin-bottom: 40px;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
