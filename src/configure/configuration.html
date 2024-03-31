@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TypeTranslator Configuration</title>
+  <title>TypeTranslator | Mrfc-Development</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="../css/basic.css">
   <link rel="stylesheet" href="../css/configure.css">
@@ -33,14 +33,16 @@
             <li class="nav-item">
               <a class="nav-link" href="../contact.html"><i class="bi bi-envelope"></i> Contact</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link arrow-icon" id="arrowIcon" ><i class="bi bi-file-earmark-arrow-up"></i>Hide</a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
   </header>
   <div class="container">
-    <h1>TypeTranslator Configuration</h1>
-
+    <div class="configurer">
     <div class="row">
       <div class="col-md-6" data-aos="fade-right" data-aos-delay="200">
         <div class="form-group">
@@ -86,16 +88,17 @@
     </div>
 
     <button class="btn btn-primary" id="addCardBtn" data-aos="zoom-in" data-aos-delay="600">Add Card</button>
-
-    <div id="cardList" class="mt-4" data-aos="fade-up" data-aos-delay="800">
+</div>
+    <div id="cardList" class="mt-4" data-aos="fade-up" data-aos-delay="1000">
       <!-- Cards will be dynamically added here -->
     </div>
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="../js/configure/cards.js"></script>
+  <script type="module" src="../js/configure/cards.js"></script>
   <script>
     AOS.init();
   </script>
